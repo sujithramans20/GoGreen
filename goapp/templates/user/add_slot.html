@@ -1,0 +1,135 @@
+{% extends 'user/index.html' %}
+{% load static %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data" action="ad_slot">
+{% csrf_token %}
+<table class="table table-bordered">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<!-- <tr>	
+		<th>Name</th>
+		<td><input type="text" name="name"  class="form-control"required oninvalid="this.setCustomValidity('Enter User Name Here')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+	
+	<tr>	
+		<th>Email</th>
+		<td><input type="text" name="email"  class="form-control"required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Enter the email here')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+	
+	<tr>	
+		<th>Phone</th>
+		<td><input type="text" name="phone"  class="form-control" required pattern="[789][0-9]{9}" oninvalid="this.setCustomValidity('Enter the Mobile number')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+	<tr>	
+		<th>Address</th>
+		<td><textarea name="address" class="form-control" required oninvalid="this.setCustomValidity('Enter the Address')" oninput="this.setCustomValidity('')"></textarea>
+		</td>
+	</tr> -->	
+	<tr>
+		<th>District</th>
+		<td><select class="form-control" id="typeofwork" name="district" onchange="return list()">
+			<option disabled selected="true">--District--</option>
+			{% for dif in di %}
+			<option value="{{dif.dis}}">{{dif.dname}}</option>
+			{% endfor %}
+		</select>
+		</td>
+	</tr>
+	<tr>
+		<th>City</th>
+		<td>
+			<select class="form-control" id="sugg" name="city" onchange="return eval()">
+				<option disabled selected="true">--City--</option>
+			     <option></option>
+			</select>
+		</td>
+	</tr>	
+	<tr>
+		<th>Evaluator</th>
+		<td><select class="form-control"  name="evname" id="sug">
+			<option disabled selected="true">--Evaluator--</option>
+		    <option><option>
+		</select>
+		</td>
+	</tr>
+		<tr>
+			<script>
+				$(function(){
+					var dtToday = new Date();
+					
+					var month = dtToday.getMonth() + 1;
+					var day = dtToday.getDate();
+					var year = dtToday.getFullYear();
+					if(month < 10)
+						month = '0' + month.toString();
+					if(day < 10)
+						day = '0' + day.toString();
+					
+					var maxDate = year + '-' + month + '-' + day;
+				
+					// or instead:
+					// var maxDate = dtToday.toISOString().substr(0, 10);
+				
+					
+					$('#txtDate').attr('min', maxDate);
+				});
+			</script>
+		<th>Date</th>
+		<td><input type="date" name="date"  class="form-control"  id="txtDate" required oninvalid="this.setCustomValidity('Enter the Date')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+		<tr>
+		<th>Time</th>
+		<td><input type="time" name="time" min="07:00:00" max="18:00:00" class="form-control"  required oninvalid="this.setCustomValidity('Enter the Time b/w 7.00Am to 6.00Pm')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+	{% comment %} <input type="text" name="evid"value="{{ev.e_id}}"id="evid"> {% endcomment %}
+	
+	<tr>
+		<td colspan="2">
+			<input type="submit" class="btn btn-primary" value="Bookslot" name="add"/>
+		</td>
+	</tr>
+	<script>
+		function list(){
+			var select = document.getElementById('typeofwork');
+			const value = select.options[select.selectedIndex].value;
+			console.log(value);
+			var citiesOptions = "";
+			fetch("/type-select",{
+				body: JSON.stringify({type:value}),
+				method: "POST"
+			})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log("data",data);
+				data.forEach((item) => {
+					citiesOptions+="<option>"+item.cname+"</option>";
+				});
+				document.getElementById("sugg").innerHTML = citiesOptions;
+			});
+		}
+		function eval(){
+			var select = document.getElementById('sugg');
+			const value = select.options[select.selectedIndex].value;
+			console.log(value);
+			var citiesOptions = "";
+			fetch("/type-select1",{
+				body: JSON.stringify({type1:value}),
+				method: "POST"
+			})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log("data",data);
+				data.forEach((item) => {
+					citiesOptions+="<option>"+item.evname+"</option>";
+				});
+				document.getElementById("sug").innerHTML = citiesOptions;
+			});
+		}
+	 </script>
+</table> 
+</form>
+{% endblock %}

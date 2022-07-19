@@ -1,0 +1,17 @@
+{% extends 'Evaluator/index.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+<form method="POST" action="/advise">
+    {% csrf_token %}
+    <label>Advise</label>
+    <textarea name="adv"></textarea><br>
+    <input type="hidden" name = "slotid"value="{{slotid}}">
+    <input type="submit" value="submit">
+</form>
+{% endblock %} 

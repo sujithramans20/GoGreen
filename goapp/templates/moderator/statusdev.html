@@ -1,0 +1,37 @@
+{% extends 'moderator/index.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+<form  method="POST" enctype="multipart/form-data" action="admstatus">
+    {% csrf_token %} 
+	<table class="table table-bordered">
+		<tr>
+			<th>OrderID</th>
+			<td><input type="text" name="track"  value="{{of.track}}" class="form-control"/>
+			</td>
+		</tr>
+		<tr>
+			<th>Customer Name</th>
+			<td><input type="text" value="{{of.user.Name}}" class="form-control"/></td>
+		</tr>
+        <tr>
+			<th>Date</th>
+			<td><input type="text" value="{{of.date}}" class="form-control" /></td>
+		</tr>
+        <tr>
+			<th>Status</th>
+			<td><input type="text" name="status" class="form-control"/></td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" class="btn btn-primary" value="Add" name="add" />
+			</td>
+		</tr>
+	</table>
+</form>
+{% endblock %}

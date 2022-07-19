@@ -1,0 +1,88 @@
+{% extends 'moderator/index.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+<form  method="POST" enctype="multipart/form-data" action="prod">
+    {% csrf_token %} 
+	<table class="table table-bordered">
+		{% comment %} <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> {% endcomment %}
+		<tr>
+			<th>Product Name</th>
+			<td><input type="text" name="pname" class="form-control" name="name" required oninvalid="this.setCustomValidity('Enter the Product Name')"
+                                           oninput="this.setCustomValidity('')" />
+			</td>
+		</tr>
+		<tr>
+			<th>Description</th>
+			<td><input type="text" name="dis" class="form-control" name="name" required oninvalid="this.setCustomValidity('Enter the Description')"
+                oninput="this.setCustomValidity('')" />
+			</td>
+		</tr>
+
+		<tr>
+			<th>Image</th>
+			<td><input type="file" name="image" accept="image/*" oninvalid="this.setCustomValidity('upload the image')"
+                                           oninput="this.setCustomValidity('')" />
+			</td>
+		</tr>
+
+	   <tr>
+			<th>Quantity</th>
+			<td><input type="text" name="quantity" class="form-control"  required oninvalid="this.setCustomValidity('Enter the qunatity')"
+                oninput="this.setCustomValidity('')" /></td>
+		</tr>
+
+		<tr>
+			<th>Price</th>
+			<td><input type="text" name="price" class="form-control"  required oninvalid="this.setCustomValidity('Enter the Price')"
+                oninput="this.setCustomValidity('')" /></td>
+		</tr>
+		<!-- <tr>
+			<td colspan="2">
+				<button name="Add" id="gen" onclick="gen()" >Generate</button>	
+			</td>
+		</tr>  -->
+		{% comment %} <tr>
+			<th>Address</th>
+			<td><input type="text" name="evaddress" class="form-control"/>
+			</td>
+		</tr>
+		<tr>
+			<th>State</th>
+			<td><select class="form-control" id="country-dropdown" name="state" required oninvalid="this.setCustomValidity('Select State')"
+                                           oninput="this.setCustomValidity('')">
+					<option value="">Select State</option>
+					
+				</select></td>
+		</tr>
+
+		<tr>
+			<th>District</th>
+			<td><select class="form-control" id="state-dropdown" name="district" required oninvalid="this.setCustomValidity('Select District')"
+                                           oninput="this.setCustomValidity('')"/>
+			</select>
+		    </td>
+		</tr>
+
+		<tr>
+			<th>City</th>
+			<td>
+				<select class="form-control" id="city-dropdown" name="city" required oninvalid="this.setCustomValidity('Select City')"
+                                           oninput="this.setCustomValidity('')" />
+				</select>
+			</td>
+		</tr> {% endcomment %}
+
+		<tr>
+			<td colspan="2">
+				<input type="submit" class="btn btn-primary" value="Add" name="add" />
+			</td>
+		</tr>
+	</table>
+</form>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'user/index.html' %}
+{% load static %}
+{% block content%}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+	<html>
+		<head>
+			<script>
+				function verifypassword(){
+					var pw=document.getElementById("pswd").value;
+					var pwd=document.getElementById("pswdd").value;
+					if(pw == pwd){
+						alert("Password is correct");  
+						return true;
+					}
+					else{
+						alert("Password is incorrect"); 
+						return false;
+					}
+				}
+			</script>
+		</head>
+	<body>
+		<table class="table table-bordered table-striped table-hover">
+			<form method="post" enctype="multipart/form-data" action="update" onsubmit=" return verifypassword()">
+                {% csrf_token %}
+				<h1>Update Password</h1>
+				<hr>
+
+
+				<tr>
+					<th>Enter Your New Password</th>
+					<td><input type="password" name="npassword" class="form-control" required id="pswd" />
+					</td>
+				</tr>
+
+				<tr>
+					<th>Enter Your Confirm Password</th>
+					<td><input type="password" name="cp" class="form-control" required  id="pswdd" />
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" class="btn btn-primary" value="Update Password" name="update" required />
+					</td>
+				</tr>
+
+			</form>
+		</table>
+	</body>
+	</html>
+    {% endblock %}
+	

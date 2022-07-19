@@ -1,0 +1,30 @@
+{% extends 'user/index.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+<form method="POST" enctype="multipart/form-data" action="viewprofile">
+{% csrf_token %}
+<table class="table table-bordered">
+	<tr>	
+		<th>Phone</th>
+		<td><input type="text" name="mobile"  class="form-control" required pattern="[789][0-9]{9}" oninvalid="this.setCustomValidity('Enter the Mobile number')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+	<tr>	
+		<th>Address</th>
+		<td><textarea name="address" class="form-control" required oninvalid="this.setCustomValidity('Enter the Address')" oninput="this.setCustomValidity('')"></textarea>
+		</td>
+	</tr> 
+	<tr>
+		<td colspan="2">
+			<input type="submit" class="btn btn-primary" value="Update" name="add"/>
+		</td>
+	</tr>
+</table> 
+</form>
+{% endblock %}

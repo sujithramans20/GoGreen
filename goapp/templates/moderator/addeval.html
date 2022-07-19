@@ -1,0 +1,108 @@
+{% extends 'moderator/index.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+<form  method="POST" enctype="multipart/form-data" action="ev_reg" onsubmit="return generatePassword()">
+	<script>
+		function generatePassword() {
+			var length = 8,
+				charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789",
+				retVal = "";
+			for (var i = 0, n = charset.length; i < length; ++i) {
+				retVal += charset.charAt(Math.floor(Math.random() * n));
+				
+			}
+			document.getElementById("pwd").value=retVal
+			return true;
+		}
+	</script>
+ {% csrf_token %}
+	<table class="table table-bordered">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<tr>
+			<th>Name</th>
+			<td><input type="text" name="evname" class="form-control" name="name" required oninvalid="this.setCustomValidity('Enter User Name Here')"
+                                           oninput="this.setCustomValidity('')" />
+			</td>
+		</tr>
+		<tr>
+			<th>Email</th>
+			<td>
+				<input type="text" name="email" class="form-control" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" oninvalid="this.setCustomValidity('Enter the email here')"oninput="this.setCustomValidity('')"/>
+			</td>
+		</tr>
+
+		<tr>
+			<th>Phone</th>
+			<td>
+				<input type="text" name="phone" class="form-control" required pattern="[789][0-9]{9}" oninvalid="this.setCustomValidity('Enter the Mobile number')" oninput="this.setCustomValidity('')" />
+			</td>
+
+		</tr>
+			{% comment %} <th>Password</th> {% endcomment %}
+			<td><input type="hidden" name="password"   value="" id="pwd"  class="form-control"/></td>
+		</tr>
+
+		<!-- <tr>
+			<td colspan="2">
+				<button name="Add" id="gen" onclick="gen()" >Generate</button>	
+			</td>
+		</tr>  -->
+		<tr>
+			<th>Address</th>
+			<td>
+				<input type="text" name="address" class="form-control" oninvalid="this.setCustomValidity('Enter the Address')" oninput="this.setCustomValidity('')" />
+			</td>
+		</tr>
+		<script>
+			function list(){
+				var select = document.getElementById('typeofwork');
+				const value = select.options[select.selectedIndex].value;
+				console.log(value);
+				var citiesOptions = "";
+				fetch("/type-select",{
+					body: JSON.stringify({type:value}),
+					method: "POST"
+				})
+				.then((res) => res.json())
+				.then((data) => {
+					console.log("data",data);
+					data.forEach((item) => {
+						citiesOptions+="<option>"+item.cname+"</option>";
+					});
+					document.getElementById("sugg").innerHTML = citiesOptions;
+				});
+			}
+		 </script>
+		<tr>
+			<th>District</th>
+			<td><select class="form-control" id="typeofwork" name="district"  onchange="return list()" oninvalid="this.setCustomValidity('select the district')" oninput="this.setCustomValidity('')" >
+				<option disabled selected="true">--District--</option>
+				{% for dif in di %}
+				<option value="{{dif.dis}}">{{dif.dname}}</option>
+				{% endfor %}
+			</select>
+		    </td>
+		</tr>
+		<tr>
+			<th>City</th>
+			<td>
+				<select class="form-control" id="sugg" name="city" oninvalid="this.setCustomValidity('Select the city')" oninput="this.setCustomValidity('')" >
+					<option disabled selected="true">--City--</option>
+					<option></option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<input type="submit" class="btn btn-primary" value="Add" name="add" />
+			</td>
+		</tr>
+	</table>
+</form>
+{% endblock %}

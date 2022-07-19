@@ -1,0 +1,101 @@
+{% extends 'user/index.html' %}
+{% load static %}
+{% block content %}
+<script type="text/javascript"> 
+    window.history.forward(); 
+    function noBack() { 
+        window.history.forward(); 
+    } 
+  </script>
+<form method="POST" enctype="multipart/form-data" action="cultiv">
+{% csrf_token %}
+<table class="table table-bordered">
+	<tr>	
+		<th>Name</th>
+		<td><input type="text" name="vname"  class="form-control" required  oninvalid="this.setCustomValidity('Enter the Name')" oninput="this.setCustomValidity('')"/>
+		</td>
+	</tr>
+	<tr>	
+		<th>Discription</th>
+		<td><textarea name="dise" class="form-control" required oninvalid="this.setCustomValidity('Enter the Description')" oninput="this.setCustomValidity('')"></textarea>
+		</td>
+	</tr> 
+    <tr>
+        <script>
+            $(function(){
+                var dtToday = new Date();
+                
+                var month = dtToday.getMonth() + 1;
+                var day = dtToday.getDate();
+                var year = dtToday.getFullYear();
+                if(month < 10)
+                    month = '0' + month.toString();
+                if(day < 10)
+                    day = '0' + day.toString();
+                
+                var maxDate = year + '-' + month + '-' + day;
+            
+                // or instead:
+                // var maxDate = dtToday.toISOString().substr(0, 10);
+            
+                
+                $('#txtDate').attr('min', maxDate);
+            });
+        </script>
+    <th>StartDate</th>
+    <td><input type="date" name="sdate"  class="form-control"  id="txtDate" required oninvalid="this.setCustomValidity('Enter the  Start Date')" oninput="this.setCustomValidity('')"/>
+    </td>
+</tr>
+<tr>
+    <script>
+        $(function(){
+            var dtToday = new Date();
+            
+            var month = dtToday.getMonth() + 1;
+            var day = dtToday.getDate();
+            var year = dtToday.getFullYear();
+            if(month < 10)
+                month = '0' + month.toString();
+            if(day < 10)
+                day = '0' + day.toString();
+            
+            var maxDate = year + '-' + month + '-' + day;
+        
+            // or instead:
+            // var maxDate = dtToday.toISOString().substr(0, 10);
+        
+            
+            $('#txtDate').attr('min', maxDate);
+        });
+    </script>
+<th>EndDate</th>
+<td><input type="date" name="ldate"  class="form-control"  id="txtDate" required oninvalid="this.setCustomValidity('Enter the End Date')" oninput="this.setCustomValidity('')"/>
+</td>
+</tr>
+<tr>	
+    <td><input type="hidden" name="e_id" value="{{e_id}}" />
+    </td>
+</tr>
+<tr>
+    <th>Slot</th>
+    <td><select class="form-control" id="typeofwork" name="slot_id">
+        <option disabled selected="true">--Slot--</option>
+        {% for dy in rt %}
+        <option value="{{dy.s_id}}">slot: {{dy.date}} Time:{{dy.time}}</option>
+        {% endfor %}
+    </select>
+    </td>
+</tr>
+<tr>	
+    <th>Status</th>
+    <td><input type="text" name="status"  class="form-control" required  oninvalid="this.setCustomValidity('Enter the Current status')" oninput="this.setCustomValidity('')"/>
+    </td>
+</tr>
+<tr>
+    <td colspan="2">
+        <input type="submit" class="btn btn-primary" value="Addd" name="add"/>
+    </td>
+</tr>
+</table> 
+</form>
+{% endblock %}
